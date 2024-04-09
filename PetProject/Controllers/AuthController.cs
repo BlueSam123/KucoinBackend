@@ -49,6 +49,23 @@ namespace PetProject.Controllers
                 return BadRequest(loginUser);
             }
         }
+        [HttpPost("pin")]
+        public async Task<IActionResult> Addtranpin(Model2 req)
+        {
+            var loginUser =  _accountService.LoginUser2(req);
+            if (loginUser.StatusCode == 200)
+            {
+                return Ok(loginUser);
+            }
+            else if (loginUser.StatusCode == 404)
+            {
+                return NotFound(loginUser);
+            }
+            else
+            {
+                return BadRequest(loginUser);
+            }
+        }
         [HttpPost("forgot_password")]
         public async Task<IActionResult> ForgotPassword(string email)
         {
